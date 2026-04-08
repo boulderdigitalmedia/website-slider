@@ -1,0 +1,406 @@
+<style>#pd-login .box{background:#fff;#pd-sm *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+#pd-login{position:fixed;top:0;left:0;width:100%;height:100%;background:#f5f5f3;display:flex;align-items:center;justify-content:center;z-index:2147483647;}
+#pd-login .box{pointer-events:all !important;position:relative;z-index:2147483647;}
+#pd-sm *{pointer-events:all !important;}
+border-radius:12px;border:1px solid #e5e5e3;padding:32px;width:300px;display:flex;flex-direction:column;gap:12px}
+#pd-login h2{font-size:16px;font-weight:600;color:#1a3a2a}
+#pd-login p{font-size:12px;color:#888}
+#pd-login input{width:100%;padding:8px 10px;border:1px solid #e0e0de;border-radius:6px;font-size:13px}
+#pd-login button{padding:10px;background:#1a3a2a;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
+#pd-login button:hover{background:#0F6E56}
+#pd-login .err{font-size:12px;color:#c0392b;display:none}
+#pd-sm{position:fixed;top:0;left:0;width:100%;height:100%;display:none;grid-template-columns:220px 1fr 260px;background:#f5f5f3;z-index:2147483646;overflow:hidden;}
+.sm-sidebar{background:#fff;border-right:1px solid #e5e5e3;display:flex;flex-direction:column;height:100%}
+.sm-sh{padding:14px;border-bottom:1px solid #e5e5e3;display:flex;align-items:center;justify-content:space-between}
+.sm-sh strong{font-size:13px;color:#1a1a1a}
+.sm-add{background:#1a3a2a;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer}
+.sm-add:hover{background:#0F6E56}
+.sm-list{flex:1;overflow-y:auto;padding:8px}
+.sm-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;border:1px solid transparent;margin-bottom:4px;position:relative}
+.sm-item:hover{background:#f5f5f3;border-color:#e5e5e3}
+.sm-item.active{background:#f0f7f4;border-color:#1D9E75}
+.sm-thumb{width:44px;height:30px;border-radius:4px;background:#e5e5e3;overflow:hidden;flex-shrink:0}
+.sm-thumb img{width:100%;height:100%;object-fit:cover}
+.sm-meta{flex:1;min-width:0}
+.sm-meta .t{font-size:12px;font-weight:500;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sm-meta .s{font-size:11px;color:#888}
+.sm-del{background:none;border:none;cursor:pointer;color:#ccc;font-size:13px;display:none}
+.sm-item:hover .sm-del{display:block}
+.sm-del:hover{color:#e24b4a}
+.sm-editor{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.sm-card{background:#fff;border-radius:10px;border:1px solid #e5e5e3;padding:16px}
+.sm-ct{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.sm-ugrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sm-dz{border:1.5px dashed #d0d0ce;border-radius:8px;cursor:pointer;position:relative;overflow:hidden;background:#fafaf8;min-height:90px;transition:border-color .15s}
+.sm-dz:hover{border-color:#1D9E75}
+.sm-dz.uploading{border-color:#f0a500;background:#fffbf0;pointer-events:none}
+.sm-dz.done{border-color:#1D9E75}
+.sm-dz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2}
+.sm-dzi{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:4px;min-height:90px}
+.sm-dzi .ico{font-size:20px;color:#ccc}
+.sm-dzi .lbl{font-size:12px;font-weight:500;color:#555}
+.sm-dzi .sub{font-size:11px;color:#aaa}
+.sm-dz img.prev{width:100%;height:90px;object-fit:cover;display:block}
+.sm-dz .dstat{font-size:10px;padding:3px 8px;text-align:center;background:#f0f7f4;color:#0F6E56}
+.sm-fg{display:flex;flex-direction:column;gap:8px}
+.sm-fl{font-size:12px;color:#555;font-weight:500}
+.sm-fg input[type=text],.sm-fg input[type=url]{width:100%;padding:8px 10px;border:1px solid #e0e0de;border-radius:6px;font-size:13px;color:#1a1a1a;font-family:inherit;background:#fff}
+.sm-fg input:focus{outline:none;border-color:#1D9E75}
+.sm-note{font-size:11px;color:#aaa;margin-top:2px}
+.sm-ovrow{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sm-ovrow label{font-size:12px;color:#555;min-width:70px}
+input[type=color]{width:36px;height:32px;border:1px solid #e0e0de;border-radius:6px;padding:2px;cursor:pointer}
+input[type=range]{flex:1}
+.sm-opv{font-size:12px;color:#888;min-width:32px;text-align:right}
+.sm-tr{display:flex;align-items:center;justify-content:space-between}
+.sm-tog{width:36px;height:20px;border-radius:10px;background:#e0e0de;position:relative;cursor:pointer;border:none;transition:background .2s;flex-shrink:0}
+.sm-tog.on{background:#1D9E75}
+.sm-tog::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s}
+.sm-tog.on::after{left:19px}
+.sm-preview{border-left:1px solid #e5e5e3;display:flex;flex-direction:column;background:#fff;height:100%}
+.sm-ph{padding:12px 14px;border-bottom:1px solid #e5e5e3;display:flex;align-items:center;justify-content:space-between}
+.sm-ph strong{font-size:13px;color:#1a1a1a}
+.sm-dt{display:flex;border:1px solid #e5e5e3;border-radius:6px;overflow:hidden}
+.sm-db{padding:4px 10px;font-size:11px;border:none;background:none;cursor:pointer;color:#888}
+.sm-db.active{background:#f0f7f4;color:#0F6E56;font-weight:500}
+.sm-pb{flex:1;display:flex;align-items:center;justify-content:center;padding:14px;overflow:hidden}
+.sm-pf{position:relative;overflow:hidden;border-radius:6px;background:#222;width:100%}
+.sm-pf.desktop{aspect-ratio:16/6}
+.sm-pf.mobile{width:110px;height:190px}
+.sm-pf img{width:100%;height:100%;object-fit:cover;display:block}
+.sm-pov{position:absolute;inset:0}
+.sm-pc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.sm-pc .pt{color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.sm-pc .ps{color:rgba(255,255,255,.9);font-size:10px;margin-top:3px;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.sm-pc .pb2{margin-top:7px;background:rgba(255,255,255,.92);color:#1a1a1a;font-size:9px;padding:4px 10px;border-radius:3px;font-weight:600}
+.sm-pempty{display:flex;align-items:center;justify-content:center;height:100%;color:#888;font-size:12px}
+.sm-save{padding:12px 14px;border-top:1px solid #e5e5e3;display:flex;flex-direction:column;gap:8px}
+.sm-spub{width:100%;padding:9px;background:#1a3a2a;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
+.sm-spub:hover:not(:disabled){background:#0F6E56}
+.sm-spub:disabled{background:#ccc;cursor:not-allowed}
+.sm-sgtm{width:100%;padding:8px;background:none;border:1px solid #e5e5e3;border-radius:8px;font-size:12px;cursor:pointer;color:#555}
+.sm-sgtm:hover{background:#f5f5f3}
+.sm-stat{font-size:11px;text-align:center;padding:6px 8px;border-radius:6px;line-height:1.5;display:none}
+.sm-stat.ok{background:#f0f7f4;color:#0F6E56;display:block}
+.sm-stat.err{background:#fef0f0;color:#c0392b;display:block}
+.sm-stat.loading{background:#fafaf8;color:#888;display:block}
+.sm-prog{height:3px;background:#e5e5e3;border-radius:2px;overflow:hidden;display:none}
+.sm-prog-fill{height:100%;background:#1D9E75;border-radius:2px;transition:width .3s}
+.sm-nosl{display:flex;align-items:center;justify-content:center;height:100%;color:#aaa;font-size:13px}
+.sm-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:100000}
+.sm-modal{background:#fff;border-radius:12px;padding:24px;width:92%;max-width:580px;max-height:85vh;overflow-y:auto}
+.sm-modal h3{font-size:15px;font-weight:600;margin-bottom:4px;color:#1a1a1a}
+.sm-modal p{font-size:12px;color:#888;margin-bottom:14px;line-height:1.5}
+.sm-modal pre{background:#f5f5f3;border-radius:6px;padding:12px;font-size:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;border:1px solid #e5e5e3;max-height:300px;overflow-y:auto}
+.sm-mbtns{display:flex;gap:8px;margin-top:12px}
+.sm-mcopy{flex:1;padding:8px;background:#1a3a2a;color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer}
+.sm-mclose{flex:1;padding:8px;border:1px solid #e5e5e3;border-radius:6px;background:none;cursor:pointer;font-size:12px;color:#555}
+</style>
+
+<!-- Login -->
+<div id="pd-login">
+  <div class="box">
+    <h2>Slider Manager</h2>
+    <p>Pacific Discovery — internal tool</p>
+    <input type="password" id="pd-pw" placeholder="Password" onkeydown="if(event.key==='Enter')window.pdLogin()">
+    <div class="err" id="pd-err">Incorrect password</div>
+    <button onclick="window.pdLogin()">Sign in</button>
+  </div>
+</div>
+
+<!-- App -->
+<div id="pd-sm">
+  <div class="sm-sidebar">
+    <div class="sm-sh"><strong>Slides</strong><button class="sm-add" onclick="smAdd()">+ Add slide</button></div>
+    <div class="sm-list" id="sm-list"></div>
+  </div>
+  <div class="sm-editor" id="sm-editor"><div class="sm-nosl">Add or select a slide to begin</div></div>
+  <div class="sm-preview">
+    <div class="sm-ph">
+      <strong>Preview</strong>
+      <div class="sm-dt">
+        <button class="sm-db active" id="sm-desk" onclick="smDev('desktop')">Desktop</button>
+        <button class="sm-db" id="sm-mob" onclick="smDev('mobile')">Mobile</button>
+      </div>
+    </div>
+    <div class="sm-pb"><div class="sm-pf desktop" id="sm-pf"><div class="sm-pempty">No slide selected</div></div></div>
+    <div class="sm-save">
+      <div class="sm-stat" id="sm-stat"></div>
+      <div class="sm-prog" id="sm-prog"><div class="sm-prog-fill" id="sm-pf2" style="width:0%"></div></div>
+      <button class="sm-spub" id="sm-spub" onclick="smSave()">Save &amp; publish to site</button>
+      <button class="sm-sgtm" onclick="smGTM()">Get GTM tag code</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const HS_TOKEN='YOUR_HUBSPOT_API_TOKEN';
+const HS_BASE='https://api.hubapi.com';
+const FOLDER='pacific-discovery-slider';
+const CFG='pd-slider-config.json';
+const PW='slider2025'; /* ← change this password */
+window._smPW=PW;
+
+let slides=[],ai=null,dev='desktop',idc=0;
+window._smCfgUrl=null;
+
+function pdLogin(){
+  if(document.getElementById('pd-pw').value===window._smPW){
+    document.getElementById('pd-login').style.display='none';
+    document.getElementById('pd-sm').style.display='grid';
+  } else {
+    document.getElementById('pd-err').style.display='block';
+  }
+}
+window.pdLogin=pdLogin;
+
+function uid(){return 'sl'+(idc++);}
+function ns(){return{id:uid(),title:'Slide title',sub:'Subtitle text',btnText:'Explore now',btnLink:'#',overlayColor:'#000000',overlayOpacity:40,visible:true,desktopUrl:null,mobileUrl:null,desktopName:null,mobileName:null};}
+
+function smAdd(){slides.push(ns());ai=slides.length-1;render();}
+function smSel(i){ai=i;render();}
+function smDel(i,e){
+  e.stopPropagation();
+  slides.splice(i,1);
+  if(ai>=slides.length)ai=slides.length-1;
+  if(!slides.length)ai=null;
+  render();
+}
+function smDev(d){
+  dev=d;
+  document.getElementById('sm-desk').className='sm-db'+(d==='desktop'?' active':'');
+  document.getElementById('sm-mob').className='sm-db'+(d==='mobile'?' active':'');
+  document.getElementById('sm-pf').className='sm-pf '+d;
+  smPrev();
+}
+function smField(k,v){
+  if(ai===null)return;
+  slides[ai][k]=v;
+  if(['title','visible'].includes(k))smSideItem(ai);
+  smPrev();
+}
+function smTogVis(){
+  if(ai===null)return;
+  slides[ai].visible=!slides[ai].visible;
+  smEdit();smSideItem(ai);
+}
+
+function setStat(m,t){const el=document.getElementById('sm-stat');el.className='sm-stat '+t;el.textContent=m;}
+function showProg(p){
+  const bar=document.getElementById('sm-prog'),fill=document.getElementById('sm-pf2');
+  bar.style.display='block';fill.style.width=p+'%';
+  if(p>=100)setTimeout(()=>{bar.style.display='none';},800);
+}
+
+async function getFolder(){
+  try{
+    const r=await fetch(`${HS_BASE}/files/v3/folders/search?query=${encodeURIComponent(FOLDER)}`,{headers:{'Authorization':'Bearer '+HS_TOKEN}});
+    if(r.ok){const d=await r.json();if(d.results&&d.results.length)return d.results[0].id;}
+    const c=await fetch(`${HS_BASE}/files/v3/folders`,{method:'POST',headers:{'Authorization':'Bearer '+HS_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER})});
+    if(c.ok){const d=await c.json();return d.id;}
+  }catch(e){}
+  return null;
+}
+
+async function hsUpload(blob,name,folderId){
+  const fd=new FormData();
+  fd.append('file',blob,name);
+  fd.append('options',JSON.stringify({access:'PUBLIC_INDEXABLE',overwrite:true}));
+  fd.append('fileName',name);
+  if(folderId)fd.append('folderId',String(folderId));
+  const r=await fetch(`${HS_BASE}/files/v3/files`,{method:'POST',headers:{'Authorization':'Bearer '+HS_TOKEN},body:fd});
+  if(!r.ok){const t=await r.text();throw new Error('HubSpot '+r.status+': '+t);}
+  return (await r.json()).url;
+}
+
+async function smUpload(type,input){
+  if(!input.files||!input.files[0]||ai===null)return;
+  const file=input.files[0];
+  const lbl=type==='desktopUrl'?'desktop':'mobile';
+  const dz=document.getElementById('dz-'+lbl);
+  if(dz){dz.className='sm-dz uploading';dz.innerHTML=`<div class="sm-dzi"><div class="ico">⏳</div><div class="lbl">Uploading ${lbl}…</div></div>`;}
+  showProg(20);setStat('Uploading '+lbl+'…','loading');
+  try{
+    const fid=await getFolder();showProg(50);
+    const url=await hsUpload(file,file.name,fid);
+    showProg(100);
+    slides[ai][type]=url;
+    slides[ai][type==='desktopUrl'?'desktopName':'mobileName']=file.name;
+    setStat(lbl+' uploaded ✓','ok');
+    smEdit();smSideItem(ai);smPrev();
+  }catch(err){
+    showProg(100);setStat('Upload failed: '+err.message,'err');smEdit();
+  }
+}
+
+async function smSave(){
+  const btn=document.getElementById('sm-spub');btn.disabled=true;
+  showProg(10);setStat('Saving…','loading');
+  try{
+    const cfg={slides:slides.filter(s=>s.visible),updatedAt:new Date().toISOString()};
+    const blob=new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'});
+    const fid=await getFolder();showProg(50);
+    window._smCfgUrl=await hsUpload(blob,CFG,fid);
+    showProg(100);setStat('Published! Site updates automatically ✓','ok');
+  }catch(err){showProg(100);setStat('Save failed: '+err.message,'err');}
+  btn.disabled=false;
+}
+
+function smGTM(){
+  const cfgUrl=window._smCfgUrl||`https://fs.hubspotusercontent.com/hubfs/${FOLDER}/${CFG}`;
+  const code=`<style>
+.banner__slider{display:none!important}
+.pd-wrap{width:100%;overflow:hidden;position:relative;background:#111}
+.pd-slide{display:none;position:relative}
+.pd-slide.active{display:block}
+.pd-link{display:block;text-decoration:none;position:relative;overflow:hidden}
+.pd-link img{width:100%;display:block;object-fit:cover;min-height:180px}
+.pd-overlay{position:absolute;inset:0;pointer-events:none}
+.pd-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5%}
+.pd-title{color:#fff;font-size:clamp(20px,4vw,52px);font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.5);margin-bottom:.3em}
+.pd-sub{color:rgba(255,255,255,.9);font-size:clamp(13px,2vw,22px);text-shadow:0 1px 4px rgba(0,0,0,.4);margin-bottom:.8em}
+.pd-btn{background:#fff;color:#1a1a1a;font-size:clamp(12px,1.4vw,17px);padding:.55em 1.6em;border-radius:4px;font-weight:600;text-decoration:none}
+.pd-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+.pd-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;border:none;padding:0;transition:background .2s}
+.pd-dot.active{background:#fff}
+.pd-arr{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.25);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center}
+.pd-arr.prev{left:10px}.pd-arr.next{right:10px}
+</style>
+<script>
+(function(){
+  fetch('${cfgUrl}?cb='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(cfg){
+      var sl=cfg.slides||[];if(!sl.length)return;
+      var mob=window.innerWidth<=768;
+      var wrap=document.createElement('div');wrap.className='pd-wrap';
+      sl.forEach(function(s,i){
+        var img=mob&&s.mobileUrl?s.mobileUrl:s.desktopUrl;
+        var r=parseInt(s.overlayColor.slice(1,3),16),g=parseInt(s.overlayColor.slice(3,5),16),b=parseInt(s.overlayColor.slice(5,7),16);
+        var op=(s.overlayOpacity/100).toFixed(2);
+        var div=document.createElement('div');div.className='pd-slide'+(i===0?' active':'');
+        div.innerHTML='<a class="pd-link" href="'+s.btnLink+'">'
+          +'<img src="'+img+'" alt="'+s.title+'">'
+          +'<div class="pd-overlay" style="background:rgba('+r+','+g+','+b+','+op+')"></div>'
+          +'<div class="pd-content">'
+          +(s.title?'<div class="pd-title">'+s.title+'</div>':'')
+          +(s.sub?'<div class="pd-sub">'+s.sub+'</div>':'')
+          +(s.btnText?'<span class="pd-btn">'+s.btnText+'</span>':'')
+          +'</div></a>';
+        wrap.appendChild(div);
+      });
+      if(sl.length>1){
+        var cur=0,all=wrap.querySelectorAll('.pd-slide');
+        var prev=document.createElement('button');prev.className='pd-arr prev';prev.innerHTML='&#8249;';
+        var next=document.createElement('button');next.className='pd-arr next';next.innerHTML='&#8250;';
+        var dots=document.createElement('div');dots.className='pd-dots';
+        sl.forEach(function(_,i){var d=document.createElement('button');d.className='pd-dot'+(i===0?' active':'');d.onclick=function(){go(i);};dots.appendChild(d);});
+        function go(n){all[cur].classList.remove('active');dots.children[cur].classList.remove('active');cur=(n+sl.length)%sl.length;all[cur].classList.add('active');dots.children[cur].classList.add('active');}
+        prev.onclick=function(){go(cur-1);};next.onclick=function(){go(cur+1);};
+        wrap.appendChild(prev);wrap.appendChild(next);wrap.appendChild(dots);
+        setInterval(function(){go(cur+1);},5000);
+      }
+      var b=document.querySelector('.banner__slider');
+      if(b)b.insertAdjacentElement('afterend',wrap);else document.body.prepend(wrap);
+    }).catch(function(e){console.warn('PD Slider:',e);});
+})();
+<\/script>`;
+
+  window._smGtm=code;
+  const m=document.createElement('div');m.className='sm-modal-bg';
+  m.innerHTML=`<div class="sm-modal">
+    <h3>GTM Custom HTML tag</h3>
+    <p>One-time setup — paste into a <strong>Custom HTML</strong> tag in GTM, trigger on <strong>All Pages</strong>, publish. After that, every time you click "Save &amp; publish" above, the live site updates automatically.</p>
+    <pre>${code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
+    <div class="sm-mbtns">
+      <button class="sm-mcopy" onclick="smCopy(this)">Copy code</button>
+      <button class="sm-mclose" onclick="this.closest('.sm-modal-bg').remove()">Close</button>
+    </div>
+  </div>`;
+  document.body.appendChild(m);
+}
+window.smCopy=function(btn){navigator.clipboard.writeText(window._smGtm||'').then(()=>{btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy code';},2000);});};
+
+function smPrev(){
+  const f=document.getElementById('sm-pf');
+  if(ai===null||!slides[ai]){f.innerHTML='<div class="sm-pempty">No slide selected</div>';return;}
+  const s=slides[ai],img=dev==='desktop'?s.desktopUrl:s.mobileUrl;
+  const r=parseInt(s.overlayColor.slice(1,3),16),g=parseInt(s.overlayColor.slice(3,5),16),b=parseInt(s.overlayColor.slice(5,7),16);
+  const op=(s.overlayOpacity/100).toFixed(2);
+  f.innerHTML=(img?`<img src="${img}" alt="">`:`<div style="width:100%;height:100%;background:#444;display:flex;align-items:center;justify-content:center;color:#888;font-size:11px">No image yet</div>`)
+    +`<div class="sm-pov" style="background:rgba(${r},${g},${b},${op})"></div>`
+    +`<div class="sm-pc">${s.title?`<div class="pt">${s.title}</div>`:''}${s.sub?`<div class="ps">${s.sub}</div>`:''}${s.btnText?`<div class="pb2">${s.btnText}</div>`:''}</div>`;
+}
+
+function smSideItem(i){
+  const s=slides[i],el=document.getElementById('smi-'+i);if(!el)return;
+  el.querySelector('.t').textContent=s.title||'Untitled';
+  el.querySelector('.s').textContent=s.visible?'Visible':'Hidden';
+  el.querySelector('.sm-thumb').innerHTML=s.desktopUrl?`<img src="${s.desktopUrl}" alt="">`:'';}
+
+function smSide(){
+  const list=document.getElementById('sm-list');list.innerHTML='';
+  slides.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='sm-item'+(i===ai?' active':'');d.id='smi-'+i;d.onclick=()=>smSel(i);
+    d.innerHTML=`<div class="sm-thumb">${s.desktopUrl?`<img src="${s.desktopUrl}" alt="">`:''}</div>
+      <div class="sm-meta"><div class="t">${s.title||'Untitled'}</div><div class="s">${s.visible?'Visible':'Hidden'}</div></div>
+      <button class="sm-del" onclick="smDel(${i},event)">✕</button>`;
+    list.appendChild(d);
+  });
+}
+
+function smEdit(){
+  const ed=document.getElementById('sm-editor');
+  if(ai===null||!slides[ai]){ed.innerHTML='<div class="sm-nosl">Add or select a slide to begin</div>';return;}
+  const s=slides[ai];
+  ed.innerHTML=`
+  <div class="sm-card">
+    <div class="sm-ct">Images</div>
+    <div class="sm-ugrid">
+      <div>
+        <div class="sm-fl" style="margin-bottom:6px">Desktop</div>
+        <div class="sm-dz${s.desktopUrl?' done':''}" id="dz-desktop">
+          <input type="file" accept="image/*" onchange="smUpload('desktopUrl',this)">
+          ${s.desktopUrl?`<img class="prev" src="${s.desktopUrl}" alt=""><div class="dstat">${s.desktopName||'Uploaded'} ✓</div>`:`<div class="sm-dzi"><div class="ico">+</div><div class="lbl">Desktop image</div><div class="sub">Click or drag</div></div>`}
+        </div>
+      </div>
+      <div>
+        <div class="sm-fl" style="margin-bottom:6px">Mobile</div>
+        <div class="sm-dz${s.mobileUrl?' done':''}" id="dz-mobile">
+          <input type="file" accept="image/*" onchange="smUpload('mobileUrl',this)">
+          ${s.mobileUrl?`<img class="prev" src="${s.mobileUrl}" alt=""><div class="dstat">${s.mobileName||'Uploaded'} ✓</div>`:`<div class="sm-dzi"><div class="ico">+</div><div class="lbl">Mobile image</div><div class="sub">Click or drag</div></div>`}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sm-card">
+    <div class="sm-ct">Overlay</div>
+    <div class="sm-ovrow"><label>Colour</label><input type="color" value="${s.overlayColor}" oninput="smField('overlayColor',this.value)"></div>
+    <div class="sm-ovrow"><label>Opacity</label><input type="range" min="0" max="100" step="1" value="${s.overlayOpacity}" oninput="smField('overlayOpacity',+this.value);document.getElementById('sm-opv').textContent=this.value+'%'"><span class="sm-opv" id="sm-opv">${s.overlayOpacity}%</span></div>
+  </div>
+  <div class="sm-card">
+    <div class="sm-ct">Text &amp; button</div>
+    <div class="sm-fg">
+      <div class="sm-fl">Slide title</div><input type="text" value="${s.title}" oninput="smField('title',this.value)" placeholder="Main headline">
+      <div class="sm-fl">Subtitle</div><input type="text" value="${s.sub}" oninput="smField('sub',this.value)" placeholder="Supporting text">
+      <div class="sm-fl">Button text</div><input type="text" value="${s.btnText}" oninput="smField('btnText',this.value)" placeholder="e.g. Learn more">
+      <div class="sm-fl">Button / slide link</div><input type="url" value="${s.btnLink}" oninput="smField('btnLink',this.value)" placeholder="https://...">
+      <div class="sm-note">The entire slide is clickable using this link</div>
+    </div>
+  </div>
+  <div class="sm-card">
+    <div class="sm-ct">Visibility</div>
+    <div class="sm-tr"><span style="font-size:13px;color:#1a1a1a">Show on site</span><button class="sm-tog${s.visible?' on':''}" onclick="smTogVis()"></button></div>
+  </div>`;
+}
+
+function render(){smSide();smEdit();smPrev();}
+
+window.smAdd=smAdd;window.smSel=smSel;window.smDel=smDel;window.smDev=smDev;
+window.smField=smField;window.smTogVis=smTogVis;window.smUpload=smUpload;
+window.smSave=smSave;window.smGTM=smGTM;
+
+smAdd();
+})();
+</script>
